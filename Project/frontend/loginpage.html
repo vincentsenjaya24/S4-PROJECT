@@ -1,0 +1,133 @@
+<html>
+
+<head>
+    <title>IKN RAILWAY MANAGEMENT SYSTEM</title>
+    <style>
+        .center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+        }
+        #footersec{
+            min-width: 100%;
+        }
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid p-0" style="background-color:black">
+            <nav class="navbar navbar-expand-lg">
+                <img src="images/favicon-ikn.png" alt="logo ikn" width="100" height="50" style="margin-right: 30px">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:white;border-color: white;border-left-style: solid;" href="/">HOME</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0" action="/">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">BACK</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="text-center text-dark mt-5">LOGIN ADMIN</h2>
+                <div class="text-center mb-5 text-dark">IKN RAILWAY MANAGEMENT SYSTEM</div>
+                <div class="card my-5">
+                    <form class="card-body cardbody-color p-lg-5">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="username" placeholder="Username" /><br />
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="password" /><br />
+                        </div>
+                        <div class="text-center">
+                            <input type="button" value="LOGIN" class="btn btn-success" id="submits" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<div class="footer">
+    <div class="container"  id="footersec">
+        <div class="row">
+            <div class="col-4 text-left">
+                <h6  style="margin-top: 1rem;">Copyright &copy; 2022</h6>
+                <p  style="margin-top: 1rem;">UNIVERSITAS INDONESIA</p>
+            </div>
+            <div class ="col-4 text-center" style="border-style:solid ;border-color: white;margin-top: 10px; margin-bottom: 10px;">
+                <p  style="margin-top: 1rem; font-size:large;">Railway Management System</p>
+            </div>
+            <div class="col-4 text-right">
+                
+                <p  style="margin-top: 1rem;"> <span id="cdate"></span> </p>
+                <p style="margin-bottom: 0rem;" > <span id="ctime"> </span></p>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        var username, pass;
+        $('#submits').click(function () {
+            username = $('#username').val();
+            pass = $('#password').val();
+
+            $.post('/login', {
+                username: username,
+                pass: pass
+            }, function (data) {
+                if (data === 'done') {
+                    window.location.href = '/admin';
+                    window.alert('Login Sukses');
+                } else if (data === 'fail') {
+                    window.alert('Password Salah');
+                } else if (data === 'notfound') {
+                    window.alert('Username tidak ditemukan');
+                } else if (data === 'empty') {
+                    window.alert('Username dan Password tidak boleh kosong');
+                } else {
+                    window.alert('Login Gagal Terjadi kesalahan');
+                }
+            });
+        });
+    });
+</script>
+<script>
+    var dt = new Date().toDateString();
+    document.getElementById("cdate").innerHTML = dt;
+    var time = setInterval(function () {
+        var dt = new Date();
+        document.getElementById("ctime").innerHTML = dt.toLocaleTimeString();
+    }, 1000);
+</script>
+
+</html>

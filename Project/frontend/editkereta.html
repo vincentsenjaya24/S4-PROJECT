@@ -1,0 +1,318 @@
+<html>
+
+<head>
+    <title>IKN Railway Management</title>
+    <style>
+        .center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+        }
+        #footersec{
+            min-width: 100%;
+        }
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid p-0" style="background-color:black">
+            <nav class="navbar navbar-expand-lg">
+                <img src="images/favicon-ikn.png" alt="logo ikn" width="100" height="50" style="margin-right:30px">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:white;border-color: white;border-left-style:solid;border-right-style: solid;" href="/admin">RUTE</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:white;border-color: white;border-right-style: solid;" href="/editstasiun">STASIUN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:white;border-color: white;border-right-style: solid;" href="/editkereta">KERETA</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:white;border-color: white;border-right-style: solid;" href="/tarif">TARIF</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:white;border-color: white;border-right-style: solid;" href="/editadmin">ADMIN</a>
+                        </li>
+                    </ul>
+                    <div class="mr-auto">
+                        <p id="tempuser" class="text-primary center"></p>
+                    </div>
+                    <form class="form-inline my-2 my-lg-0" action="/logout">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="logout">LOGOUT</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+        </div>
+    </header>
+    <main style="margin-top:30px;">
+        <div class="container-fluid text-center">
+            <div class="row py-2 my-auto mx-auto">
+                <div class="col-sm-12 col-md-1 col-lg-1"></div>
+                <div class="col-sm-12 col-md-2 col-lg-2">
+                    <h3 class="font-weight-bold">INPUT DATA BARU</h3>
+                    <table class="table table-striped mx-auto">
+                        <tr>
+                            <td>
+                                <div>
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="kereta">NAMA KERETA</label>
+                                            <input type="text" class="form-control" id="nama_kereta"
+                                                placeholder="NAMA KERETA" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="stasiunberangkat">KAPASITAS PENUMPANG</label>
+                                            <input type="text" class="form-control" id="kapasitas"
+                                                placeholder="KAPASITAS" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="tahunbuat">TANGGAL PEMBUATAN</label>
+                                            <input type="text" class="form-control" id="tahun_pembuatan"
+                                                placeholder="TANGGAL PEMBUATAN" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="waktuberangkat">TANGGAL AKTIF</label>
+                                            <input type="text" class="form-control" id="tahun_aktif"
+                                                placeholder="TANGGAL Beroperasi" />
+                                        </div>
+                                        <div class="text-center">
+                                            <input type="button" value="SUBMIT" class="btn btn-success" id="submits" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 text-center">
+                    <h1 class="mx-auto font-weight-bold">DATA KERETA</h1>
+                    <table class="table table-dark mx-auto" id="kereta">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nomor Kereta</th>
+                                <th scope="col">Nama Kereta</th>
+                                <th scope="col">Kapasitas Penumpang</th>
+                                <th scope="col">TANGGAL Pembuatan</th>
+                                <th scope="col">Tanggal Beroperasi</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="col-sm-12 col-md-2 col-lg-2">
+                    <h3 class="font-weight-bold">UPDATE or DELETE</h3>
+                    <table class="table table-striped mx-auto">
+                        <tr>
+                            <td>
+                                <div>
+                                    <form>
+                                        <div class="mb-3 text-center">
+                                            <label for="id_kereta">ID KERETA</label>
+                                            <input type="text" class="form-control" id="id_update"
+                                                placeholder="ID KERETA" /><br>
+                                            <div class="collapse" id="collapseinput">
+                                                <form>
+                                                    <div class="mb-3 text-center">
+                                                        <label for="nama_kereta">NAMA KERETA</label>
+                                                        <input type="text" class="form-control" id="nama_update"
+                                                            placeholder="nama kereta" />
+                                                    </div>
+                                                    <div class="mb-3 text-center">
+                                                        <label for="kapasitas">KAPITAS KERETA</label>
+                                                        <input type="text" class="form-control" id="kapa_update"
+                                                            placeholder="KAPASITAS KERETA" />
+                                                    </div>
+                                                    <div class="mb-3 text-center">
+                                                        <label for="daerah_stasiun">TANGGAL DIBUAT</label>
+                                                        <input type="text" class="form-control" id="buat_update"
+                                                            placeholder="TANGGAL PEMBUATAN" />
+                                                    </div>
+                                                    <div class="mb-3 text-center">
+                                                        <label for="tangalaktif">TANGGAL AKTIF</label>
+                                                        <input type="text" class="form-control" id="aktif_update"
+                                                            placeholder="TANGGAL BEROPERASI" />
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <input type="button" value="UPDATE" class="btn btn-success"
+                                                            id="update" />
+                                                    </div><br>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" onclick="myFunction()" class="btn btn-warning w-50"
+                                                data-toggle="collapse" data-target="#collapseinput"
+                                                aria-expanded="false" aria-controls="collapseinput"
+                                                id="edits">EDIT</button>
+                                        </div><br>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-danger w-50 mx-auto"
+                                                id="deletes">Delete</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-12 col-md-1 col-lg-1"></div>
+            </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+<div class="footer">
+    <div class="container"  id="footersec">
+        <div class="row">
+            <div class="col-4 text-left">
+                <h6  style="margin-top: 1rem;">Copyright &copy; 2022</h6>
+                <p  style="margin-top: 1rem;">UNIVERSITAS INDONESIA</p>
+            </div>
+            <div class ="col-4 text-center" style="border-style:solid ;border-color: white;margin-top: 10px; margin-bottom: 10px;">
+                <p  style="margin-top: 1rem; font-size:large;">Railway Management System</p>
+            </div>
+            <div class="col-4 text-right">
+                
+                <p  style="margin-top: 1rem;"> <span id="cdate"></span> </p>
+                <p style="margin-bottom: 0rem;" > <span id="ctime"> </span></p>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    function myFunction() {
+        var x = document.getElementById("deletes");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+<script>
+    jQuery(document).ready(function ($) {
+        $.post('/getkereta', {}, function (data) {
+            $('#kereta').html(data);
+        });
+        $.post('/getuser', {}, function (datas) {
+            $('#tempuser').html(datas);
+        });
+    });
+    $('#submits').click(function () {
+        nama_kereta = $('#nama_kereta').val();
+        kapasitas = $('#kapasitas').val();
+        tahun_pembuatan = $('#tahun_pembuatan').val();
+        tahun_aktif = $('#tahun_aktif').val();
+
+        $.post('/inputkereta', {
+            nama_kereta: nama_kereta,
+            kapasitas: kapasitas,
+            tahun_pembuatan: tahun_pembuatan,
+            tahun_aktif: tahun_aktif
+        }, function (data) {
+            if (data === 'done') {
+                window.location.href = '/editkereta';
+                window.alert('Input Data Kereta Sukses');
+            } else if (data === 'empty') {
+                window.alert('Data Tidak Boleh Kosong');
+            } else {
+                window.alert('Input Data Kereta Gagal');
+            }
+        });
+    });
+
+    $('#update').click(function () {
+        id_kereta = $('#id_update').val();
+        $.post('/cekkereta', {
+            id_kereta: id_kereta
+        }, function (data) {
+            if (data === 'found') {
+                nama_kereta = $('#nama_update').val();
+                kapasitas_kereta = $('#kapa_update').val();
+                tahun_buat = $('#buat_update').val();
+                tahun_aktif = $('#aktif_update').val();
+                $.post('/updatekereta', {
+                    id_kereta: id_kereta,
+                    nama_kereta: nama_kereta,
+                    kapasitas_kereta: kapasitas_kereta,
+                    tahun_buat: tahun_buat,
+                    tahun_aktif: tahun_aktif
+                }, function (data) {
+                    if (data === 'updated') {
+                        window.location.href = '/editkereta';
+                        window.alert('Update Data Kereta Sukses');
+                    } else if (data === 'empty') {
+                        window.alert('Input Data Tidak Boleh Kosong');
+                    } else {
+                        window.alert('Update Data Kereta Gagal');
+                    }
+                });
+            } else if (data === 'empty') {
+                window.alert('Input Tidak Boleh Kosong');
+            } else if (data === 'notfound') {
+                window.alert('ID Tidak Ditemukan');
+            } else {
+                window.alert('ERROR');
+            }
+        })
+    });
+
+    $('#deletes').click(function () {
+        id_kereta = $('#id_update').val();
+        $.post('/cekkereta', {
+            id_kereta: id_kereta
+        }, function (data) {
+            if (data === 'found') {
+                if (window.confirm('Apakah Anda Yakin Ingin Menghapus Data Ini?')) {
+                    $.post('/deletekereta', {
+                        id_kereta: id_kereta
+                    }, function (datas) {
+                        if (datas === 'deleted') {
+                            window.location.href = '/editkereta';
+                            window.alert('Data Kereta Berhasil Dihapus');
+                        } else {
+                            window.alert('Data Kereta Gagal Dihapus');
+                        }
+                    });
+                }
+            } else if (data === 'empty') {
+                window.alert('Input tidak boleh kosong');
+            } else {
+                window.alert('ERROR');
+            }
+        })
+    });
+</script>
+<script>
+    var dt = new Date().toDateString();
+    document.getElementById("cdate").innerHTML = dt;
+    var time = setInterval(function () {
+        var dt = new Date();
+        document.getElementById("ctime").innerHTML = dt.toLocaleTimeString();
+    }, 1000);
+</script>
+
+</html>

@@ -1,0 +1,130 @@
+<html>
+
+<head>
+    <title>IKN Railway Management</title>
+    <style>
+        .center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+        }
+        #footersec{
+            min-width: 100%;
+        }
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid p-0" style="background-color:black">
+            <nav class="navbar navbar-expand-lg">
+                <img src="images/favicon-ikn.png" alt="logo ikn" width="100" height="50" style="margin-right: 30px;">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:white;border-color: white;border-left-style: solid;border-right-style: solid;" href="/">HOME</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:white;border-color: white;border-right-style: solid;" href="/stasiun">STASIUN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:white;border-color: white;border-right-style: solid;" href="/kereta">KERETA</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0" action="/loginpage">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">LOGIN</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+        </div>
+    </header>
+
+    <main style="margin-top: 30px;">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 col-sm-12">
+                    <h1>DAFTAR KERETA</h1>
+                    <table class="table table-dark" id="kereta">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Nomor Rute</th>
+                                <th scope="col">Nama Kereta</th>
+                                <th scope="col">Harga</th>
+                                <th scope="col">Stasiun Keberangkatan</th>
+                                <th scope="col">Waktu Keberangkatan</th>
+                                <th scope="col">Stasiun Tujuan</th>
+                                <th scope="col">Waktu Tiba</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+<div class="footer">
+    <div class="container"  id="footersec">
+        <div class="row">
+            <div class="col-4 text-left">
+                <h6  style="margin-top: 1rem;">Copyright &copy; 2022</h6>
+                <p  style="margin-top: 1rem;">UNIVERSITAS INDONESIA</p>
+            </div>
+            <div class ="col-4 text-center" style="border-style:solid ;border-color: white;margin-top: 10px; margin-bottom: 10px;">
+                <p  style="margin-top: 1rem; font-size:large;">Railway Management System</p>
+            </div>
+            <div class="col-4 text-right">
+                
+                <p  style="margin-top: 1rem;"> <span id="cdate"></span> </p>
+                <p style="margin-bottom: 0rem;" > <span id="ctime"> </span></p>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        $.post('/getkereta', {}, function (data) {
+            $('#kereta').html(data);
+        });
+    });
+</script>
+<script>
+    var dt = new Date().toDateString();
+    document.getElementById("cdate").innerHTML = dt;
+    var time = setInterval(function () {
+        var dt = new Date();
+        document.getElementById("ctime").innerHTML = dt.toLocaleTimeString();
+    }, 1000);
+</script>
+
+</html>
